@@ -1,4 +1,10 @@
 export function dim(canvas, pixel, radius) {
+  if (!pixel || pixel < 1) {
+    pixel = 1;
+  }
+  if (!radius || radius < 1) {
+    radius = 1;
+  }
   const ctx = canvas.getContext('2d');
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const width = parseInt(canvas.width / pixel), height = parseInt(canvas.height / pixel);
@@ -10,12 +16,12 @@ export function dim(canvas, pixel, radius) {
   const getIndex = (x, y) => {
     return x * pixel * 4 + y * pixel * canvas.width * 4;
   }
-  for (let y = - radius - 1; y < height; y++) {
-    const ry = y + radius + 1;
+  for (let y = - radius; y < height; y++) {
+    const ry = y + radius;
     map.push([]);
     dp.push([]);
-    for (let x = - radius - 1; x < width; x++) {
-      const rx = x + radius + 1;
+    for (let x = - radius; x < width; x++) {
+      const rx = x + radius;
       dp[ry][rx] = [0, 0, 0, 0];
       if (x < 0 || x >= width || y < 0 || y >= height) {
         map[ry][rx] = [0, 0, 0, 0];
@@ -26,16 +32,16 @@ export function dim(canvas, pixel, radius) {
     }
   }
 
-  for (let y = - radius; y < height; y++) {
-    const ry = y + radius + 1;
-    for (let x = - radius; x < width; x++) {
-      const rx = x + radius + 1;
+  for (let y = 1 - radius; y < height; y++) {
+    const ry = y + radius;
+    for (let x = 1 - radius; x < width; x++) {
+      const rx = x + radius;
       const value = [0, 0, 0, 0];
       for (let v of [
         dp[ry - 1][rx],
         dp[ry][rx - 1],
-        getMapValue(rx - radius - 1, ry - radius - 1),
-        getMapValue(rx + radius, ry + radius)
+        getMapValue(rx - radius, ry - radius),
+        getMapValue(rx + radius - 1, ry + radius - 1)
       ]) {
         for (let i = 0; i < 4; i++) {
           value[i] += v[i]
@@ -43,8 +49,8 @@ export function dim(canvas, pixel, radius) {
       }
       for (let v of [
         dp[ry - 1][rx - 1],
-        getMapValue(rx + radius, ry - radius - 1),
-        getMapValue(rx - radius - 1, ry + radius)
+        getMapValue(rx + radius - 1, ry - radius),
+        getMapValue(rx - radius, ry + radius - 1)
       ]) {
         for (let i = 0; i < 4; i++) {
           value[i] -= v[i]
@@ -56,8 +62,8 @@ export function dim(canvas, pixel, radius) {
         continue;
       }
       const index = getIndex(x, y);
-      const total = (Math.min(width - 1, x + radius) - Math.max(0, x - radius) + 1)
-        * (Math.min(height - 1, y + radius) - Math.max(0, y - radius) + 1);
+      const total = (Math.min(width, x + radius) - Math.max(0, x - radius + 1))
+        * (Math.min(height, y + radius) - Math.max(0, y - radius + 1));
       const px = parseInt((index % (canvas.width * 4)) / 4);
       const py = parseInt(index / (canvas.width * 4));
       for (let i = 0; i < pixel && py + i < canvas.height; i++) {
