@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "parcel ./test/index.html -d ./test/dist/"
+    "test": "parcel ./test/index.html -d ./test/dist/",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
