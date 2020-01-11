@@ -44,3 +44,7 @@ target/
 *.log
 
 package-lock.json
+
+/test/
+
+/.cache/

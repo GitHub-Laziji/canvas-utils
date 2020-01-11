@@ -1,0 +1,23 @@
+{
+  "name": "canvas-utils",
+  "version": "1.0.0",
+  "description": "Canvas utils",
+  "main": "utils.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "parcel ./test/index.html -d ./test/dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHub-Laziji/canvas-utils.git"
+  },
+  "keywords": [],
+  "author": "laziji",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GitHub-Laziji/canvas-utils/issues"
+  },
+  "homepage": "https://github.com/GitHub-Laziji/canvas-utils#readme"
+}
