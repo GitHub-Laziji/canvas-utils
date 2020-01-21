@@ -1,6 +1,18 @@
 # canvas-utils
 Canvas utils
 
+## 演示
+[https://codepen.io/laziji/pen/ZEYVWMe](https://codepen.io/laziji/pen/ZEYVWMe)
+
+
+# 使用
+
+```html
+<script src="https://unpkg.com/canvas-djs/dist/canvas-d.js"></script>
+<script>
+  CanvasUtils.dim(canvas, 1, 3);
+</script>
+```
 
 ```js
 // 原型
